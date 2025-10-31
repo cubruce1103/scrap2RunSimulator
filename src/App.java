@@ -65,12 +65,14 @@ public class App{
         try {
             scrapMult = Double.valueOf(args[0]);
             for (String arg : args) {
-                if (arg.equals("-b")) {
+                if (arg.equals("-f")) {
                     activateFasterBarrel = true;
                 }
             }
         } catch (Exception e) {
-            // TODO: handle exception
+            System.out.println("Please pass a Double in shell (for Scrap income Multiplier)");
+            System.out.println("options: -f for faster barrels");
+            return;
         }
         String configurationString = String.format(
             "Run Configuration: %.1g x Scrap Multiplier%s\n", 
@@ -140,7 +142,7 @@ public class App{
                     scrapRun.calculateGolden(), scrapRun.timeTotal/100, 
                     scrapRun.merge,
                     scrapRun.calculateGolden()/((double)scrapRun.timeTotal/(100 * 3600)),
-                    scrapRun.upgradeOrder.substring(0, Math.min(120,scrapRun.upgradeOrder.length()))
+                    scrapRun.upgradeOrder
                     );
                 iter ++;
             }
@@ -152,5 +154,6 @@ public class App{
         FileWriter writer = new FileWriter(filename);
         writer.write(outputString);
         writer.close();
+        System.out.printf("Output Printed to %s\n", filename);
     }
 }
