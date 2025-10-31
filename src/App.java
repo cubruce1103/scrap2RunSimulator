@@ -8,7 +8,12 @@
  * merges can be done immediately
  * upgrades can be bought immediately, in bulk
  * Should be true: there's no point to not upgrade immediately
+ *
+ * interesting cases:
+ * w/o FB: 1e0, 1e21
+ * w/  FB: ?
  */
+
 
 import java.io.FileWriter;
 import java.time.LocalDateTime;
@@ -20,13 +25,7 @@ import java.util.Comparator;
 public class App{
     static final int BETTERBARREL_LIMIT = 400;
     static final int TIME_LIMIT = 2 * 60 * 60 * 100;
-    /*
-     * interesting cases:
-     * w/o FB: 1e0, 1e21
-     * w/  FB: ?
-     */
-    static final double SCRAP_MULT = 1e0;
-    static final boolean ACTIVATED_FASTER_BARREL_EVENT = false;
+    
 
     static ArrayList<ArrayList<ArrayList<ScrapRun>>> bestRuns = new ArrayList<ArrayList<ArrayList<ScrapRun>>>(100); // TODO with how it's done in this version we can reduce it to a 2dList
     static ArrayList<ScrapRun> pendingRuns = new ArrayList<ScrapRun>();
@@ -61,14 +60,25 @@ public class App{
         }
     }
     public static void main(String[] args) throws Exception {
+        double scrapMult = 1;
+        boolean activateFasterBarrel = false;
+        try {
+            scrapMult = Double.valueOf(args[0]);
+            for (String arg : args) {
+                if (arg.equals("-b")) {
+                    activateFasterBarrel = true;
+                }
+            }
+        } catch (Exception e) {
+            // TODO: handle exception
+        }
         String configurationString = String.format(
             "Run Configuration: %.1g x Scrap Multiplier%s\n", 
-            SCRAP_MULT, 
-            ( ACTIVATED_FASTER_BARREL_EVENT ? ", FB event activated" : "" )
+            scrapMult, ( activateFasterBarrel ? ", FB event activated" : "" )
             );
         System.out.printf(configurationString);
 
-        ScrapRun initialRun = new ScrapRun(SCRAP_MULT, ACTIVATED_FASTER_BARREL_EVENT);
+        ScrapRun initialRun = new ScrapRun(scrapMult, activateFasterBarrel);
         addRun(initialRun);
         int iter = 0;
         
