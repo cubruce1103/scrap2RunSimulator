@@ -16,9 +16,9 @@
 
 
 import java.io.FileWriter;
-import java.time.LocalDateTime;
-import java.time.ZoneOffset;
-import java.time.format.DateTimeFormatter;
+// import java.time.LocalDateTime;
+// import java.time.ZoneOffset;
+// import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Comparator;
 
@@ -149,8 +149,8 @@ public class App{
         } while(pendingRuns.size() > 0);
 
         //write to file
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("uuuu_MMdd_HHmmss");
-        String filename = "out" + LocalDateTime.now(ZoneOffset.of("Z")).format(formatter).toString() + ".txt";
+        // DateTimeFormatter formatter = DateTimeFormatter.ofPattern("uuuu_MMdd_HHmmss");
+        String filename = "scrapRun_mult_" + String.format("%.3e", scrapMult) + (activateFasterBarrel ? "_withFB" : "") + ".txt";
         FileWriter writer = new FileWriter(filename);
         writer.write(outputString);
         writer.close();
