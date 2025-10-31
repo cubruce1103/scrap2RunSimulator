@@ -14,7 +14,7 @@
         },
         {
             "type": "java",
-            "name": "App",
+            "name": "Run with arguments...",
             "request": "launch",
             "mainClass": "App",
             "projectName": "scrap2RunSimulator_ee3b990",
